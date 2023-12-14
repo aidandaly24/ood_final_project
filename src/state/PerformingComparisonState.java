@@ -11,7 +11,7 @@ public class PerformingComparisonState implements State {
     public void handleInput(AppContext context, String input) {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("Enter the type of comparison ('player' or 'team'):");
+        System.out.println("Enter the type of comparison ('player' or 'team'): ");
         String comparisonTypeInput = scanner.nextLine();
 
         System.out.println("Enter the first entity for comparison:");
