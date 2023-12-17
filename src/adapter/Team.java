@@ -6,7 +6,7 @@ public class Team {
 
     ArrayList<Player> players = new ArrayList<Player>();
 
-    private String name;
+    public String name;
     private String season;
     private double averageAge;
     private double averageMinutesPlayed;

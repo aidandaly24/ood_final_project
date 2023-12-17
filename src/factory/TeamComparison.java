@@ -1,6 +1,7 @@
 package src.factory;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import src.adapter.CSVAdapter;
 import src.adapter.Team;
@@ -58,8 +59,19 @@ public class TeamComparison implements Comparison {
     public void compare(String team1, String team2) throws IOException {
         // Implement team comparison logic here
         CSVAdapter adapter = CSVAdapter.getInstance();
-        Team t1 = adapter.getTeamSeasons().get(team1);
-        Team t2 = adapter.getTeamSeasons().get(team2);
+        HashMap<String, Team> teams = adapter.getTeamSeasons();
+
+        if (!teams.containsKey(team1) || !teams.containsKey(team2)) {
+            System.out.println(
+                    "Unfortunately there has been an unforseen error with retrieving data for these teams. Please rerun the program.");
+            System.exit(0);
+        }
+
+        Team t1 = teams.get(team1);
+        Team t2 = teams.get(team2);
+
+        adapter.printTeams();
+
         assignValues(t1, t2);
 
         t1EstimatePossessions = estimatePossessions(t1);
@@ -116,6 +128,7 @@ public class TeamComparison implements Comparison {
 
     private void assignValues(Team t1, Team t2) {
         // Assign values to team 1 statistics
+        System.out.println(t1.name);
         t1Name = t1.getName();
         t1Season = t1.getSeason();
         t1AveragePoints = t1.getAveragePoints();

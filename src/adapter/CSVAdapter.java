@@ -38,7 +38,7 @@ public class CSVAdapter {
 
             if (player == null) {
                 player = new Player(playerName);
-                playersMap.put(playerName, player);
+                playersMap.put(playerName.toLowerCase(), player);
             }
 
             player.addSeason(season);
@@ -89,6 +89,7 @@ public class CSVAdapter {
             String[] keyParts = key.split("-");
             // Assuming the averages are in the same order as Team constructor parameters,
             // excluding name and season
+
             Team team = new Team(
                     keyParts[0],
                     keyParts[1],
@@ -118,7 +119,7 @@ public class CSVAdapter {
                     averages.get(23) // averagePoints
             );
 
-            teams.put(key, team);
+            teams.put(key.toLowerCase(), team);
         }
 
         return teams;
@@ -228,7 +229,7 @@ public class CSVAdapter {
 
     public List<PlayerSeasonBean> readCsv() {
         List<PlayerSeasonBean> playerSeasonBeans = new ArrayList<>();
-        String filePath = "stats.csv";
+        String filePath = "src/adapter/stats.csv";
 
         try (Scanner scanner = new Scanner(new File(filePath))) {
             if (scanner.hasNextLine()) {
@@ -238,6 +239,12 @@ public class CSVAdapter {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
+
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i].trim().isEmpty()) {
+                        values[i] = "0";
+                    }
+                }
 
                 // Assuming values are correctly ordered and formatted
                 PlayerSeasonBean season = new PlayerSeasonBean(
@@ -295,6 +302,14 @@ public class CSVAdapter {
         for (String name : allPlayers.keySet()) {
             String key = name.toString();
             String value = allPlayers.get(name).toString();
+            System.out.println(key + " " + value);
+        }
+    }
+
+    public void printTeams() {
+        for (String name : allTeams.keySet()) {
+            String key = name.toString();
+            String value = allTeams.get(name).getName();
             System.out.println(key + " " + value);
         }
     }
