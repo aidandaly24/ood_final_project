@@ -1,5 +1,7 @@
 package src.factory;
 
+import java.io.IOException;
+
 public interface Comparison {
-    String compare(String playerOrTeam1, String playerOrTeam2);
+    void compare(String playerOrTeam1, String playerOrTeam2) throws IOException;
 }

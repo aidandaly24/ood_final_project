@@ -4,17 +4,17 @@ public class AppContext {
     private State currentState;
 
     public AppContext(String input) {
-        // Setting initial state off user input
-        if ("fetch".equalsIgnoreCase(input)) {
-            currentState = new FetchingYearsState(); 
-            this.handleInput();
-        }
-
         if ("compare".equalsIgnoreCase(input)) {
             currentState = new PerformingComparisonState();
             this.handleInput();
+        } else if ("quit".equalsIgnoreCase(input)) {
+            currentState = new QuittingState();
+            this.handleInput();
+        } else {
+            System.out.println("\n That was not a correct input, please enter eiter 'compare' or 'quit'.");
+            currentState = new ReadyForComparisonState();
         }
-        
+
     }
 
     public void setState(State state) {
@@ -25,15 +25,8 @@ public class AppContext {
         return this.currentState;
     }
 
-    public void handleInput(String input) {
-        currentState.handleInput(this, input);
-    }
-
     public void handleInput() {
-        currentState.handleInput(this, input);
+        currentState.handleInput(this);
     }
 
-    public void handleInput(int[] input) {
-        currentState.handleInput(this, input);
-    }
 }
